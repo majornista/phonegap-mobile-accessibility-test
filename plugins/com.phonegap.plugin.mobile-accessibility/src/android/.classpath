@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="/Users/mjordan/__AndroidSDK__/android-sdk-macosx/platforms/android-17/android.jar"/>
+	<classpathentry kind="lib" path="/Users/mjordan/Documents/workspace/MobileAccessibility/platforms/android/libs/cordova-3.2.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PhoneGapMobileAccessibility"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

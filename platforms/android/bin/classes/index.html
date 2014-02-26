@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>PhoneGap Accessibility</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>PhoneGap</h1>
+            <div id="devicereadystatus" role="status" class="statusitem blink">
+                <p class="deviceready off">Connecting to Device</p>
+                <p class="deviceready on">Device is Ready</p>
+            </div>
+            <div class="ios-specific android-specific">
+                <div id="screenreaderstatus" role="status" class="statusitem blink">
+                    <p class="screenreader off">Screen Reader is OFF</p>
+                    <p class="screenreader on">Screen Reader is ON</p>
+                </div>
+            </div>
+            <div class="android-specific">
+                <div id="chromevoxstatus" role="alert" class="statusitem blink" hidden="hidden">
+                    <p class="chromevox alert">ChromeVox is UNAVAILABLE</p>
+                </div>
+            </div>
+            <div class="ios-specific android-specific">
+                <div id="closedcaptioningstatus" role="status" class="statusitem blink">
+                    <p class="closedcaptioning off">Closed Captioning is OFF</p>
+                    <p class="closedcaptioning on">Closed Captioning is ON</p>
+                </div>
+            </div>
+            <div class="statusitem">
+                <button id="speak" class="postnotificationbutton" value="Hey there! This is a test of a generic speak command." disabled>Speak Something</button>
+            </div>
+            <div class="statusitem">
+                <button id="stop" class="postnotificationbutton" value="Hello again! This is a test of the stop speaking command. This countdown should stop before it reaches zero. Ten, Nine, Eight, Seven, Six, Five, Four, Three, Two, One, Zero." disabled>Stop Speaking</button>
+            </div>
+            <div class="ios-specific">
+                <h2>iOS Specific</h2>
+                <div id="guidedaccessstatus" role="status" class="statusitem blink">
+                    <p class="guidedaccess off">Guided Access is OFF</p>
+                    <p class="guidedaccess on">Guided Access is ON</p>
+                </div>
+                <div id="invertcolorsstatus" role="status" aria-channel="general" class="statusitem blink">
+                    <p class="invertcolors off">Invert Colors is OFF</p>
+                    <p class="invertcolors on">Invert Colors is ON</p>
+                </div>
+                <div id="monoaudiostatus" role="status" aria-channel="general" class="statusitem blink">
+                    <p class="monoaudio off">Audio is STEREO</p>
+                    <p class="monoaudio on">Audio is MONO</p>
+                </div>
+                <div class="statusitem">
+                    <button id="postannouncementnotification" class="postnotificationbutton" value="This is a test of an announcement notification." disabled>Post Announcement Notification</button>
+                </div>
+                <div class="statusitem">
+                    <button id="postlayoutchangednotification" class="postnotificationbutton" value="This is a test of a layout changed notification." disabled>Post Layout Changed Notification</button>
+                </div>
+                <div class="statusitem">
+                    <button id="postpagescrollednotification" class="postnotificationbutton" value="This is a test of a page scrolled notification." disabled>Post Page Scrolled Notification</button>
+                </div>
+                <div class="statusitem">
+                    <button id="postscreenchangednotification" class="postnotificationbutton" value="This is a test of a screen changed notification. " disabled>Post Screen Changed Notification</button>
+                </div>
+            </div>
+            <div class="android-specific">
+                <h2>Android Specific</h2>
+                <div id="touchexplorationstatus" role="status" class="statusitem blink">
+                    <p class="touchexploration off">Touch Exploration is OFF</p>
+                    <p class="touchexploration on">Touch Exploration is ON</p>
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>

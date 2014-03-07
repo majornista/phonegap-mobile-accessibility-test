@@ -51,21 +51,23 @@ var app = {
     onPause: function(event) {
         document.removeEventListener("pause", app.onPause);
         document.addEventListener("resume", app.onResume, false);
+        app.toggleAccessibilityStatusMonitoring(false);
     },
     onResume: function(event) {
         setTimeout(function(app) {
             document.removeEventListener("resume", app.onResume);
             document.addEventListener("pause", app.onPause, false);
+            app.toggleAccessibilityStatusMonitoring(true);
         }, 0, app);
     },
     toggleAccessibilityStatusMonitoring: function(bool) {
         if (typeof MobileAccessibility === "undefined") return;
+        var preferredtextzoomInput = document.getElementById("preferredtextzoom");
         if (bool) {
             MobileAccessibility.isScreenReaderRunning(app.isScreenReaderRunningCallback);
             MobileAccessibility.isClosedCaptioningEnabled(app.isClosedCaptioningEnabledCallback);
             window.addEventListener("screenreaderstatuschanged", app.onScreenReaderStatusChanged, false);
             window.addEventListener("closedcaptioningstatuschanged", app.onClosedCaptioningStatusChanged, false);
-
             if (device.platform === "iOS") {
                 MobileAccessibility.isGuidedAccessEnabled(app.isGuidedAccessEnabledCallback);
                 MobileAccessibility.isInvertColorsEnabled(app.isInvertColorsEnabledCallback);
@@ -77,6 +79,11 @@ var app = {
                 MobileAccessibility.isTouchExplorationEnabled(app.isTouchExplorationEnabledCallback);
                 window.addEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged, false);
             }
+            if (preferredtextzoomInput) {
+            	preferredtextzoomInput.checked = MobileAccessibility.usePreferredTextZoom();
+            	preferredtextzoomInput.addEventListener("change", app.usePreferredTextZoom, false);
+            	app.usePreferredTextZoom();
+            }
         } else {
             window.removeEventListener("screenreaderstatuschanged", app.onScreenReaderStatusChanged);
             window.removeEventListener("closedcaptioningstatuschanged", app.onClosedCaptioningStatusChanged);
@@ -86,6 +93,9 @@ var app = {
                 window.removeEventListener("monoaudiostatuschanged", app.onMonoAudioStatusChanged);
             } else if (device.platform === "Android") {
                 window.removeEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged);
+            }
+            if (preferredtextzoomInput) {
+            	preferredtextzoomInput.removeEventListener("change", app.usePreferredTextZoom);
             }
         }
     },
@@ -191,6 +201,13 @@ var app = {
             } else {
                 btn.removeEventListener("click", app.handleNotificationButtonClick);
             }
+        }
+    },
+    usePreferredTextZoom: function (event) {
+    	var preferredtextzoomInput = document.getElementById("preferredtextzoom");
+        if (preferredtextzoomInput) {
+        	// console.log("app.usePreferredTextZoom " + preferredtextzoomInput.checked);
+        	MobileAccessibility.usePreferredTextZoom(preferredtextzoomInput.checked);
         }
     },
     timeoutId: null,

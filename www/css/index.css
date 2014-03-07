@@ -80,7 +80,7 @@ body.android .android-specific {
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {
         background-position: left -20px;
-        padding:30px 0px 30px 170px;  /* padding-top + padding-bottom + text area = image height */
+        padding: 60px 0px 30px 170px;  /* padding-top + padding-bottom + text area = image height */
         margin: 15% auto 3% -16em; /* offset vertical: half of image height */
                             /* offset horizontal: half of image width and text area width */
     }
@@ -163,4 +163,117 @@ h2 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+.title {
+    letter-spacing: -.065em;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  opacity: 0.001;
+  z-index: 1;
+  vertical-align: top;
+  outline: none;
+  height: 1rem;
+  width: 1rem;
+  margin-top: 0;
+  margin-right: -1rem;
+  margin-bottom: -1rem;
+  margin-left: 0;
+}
+
+.topcoat-checkbox__checkmark {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.topcoat-checkbox {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1rem;
+  text-align: start;
+}
+
+input[type="checkbox"]:disabled + .topcoat-checkbox__checkmark {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.topcoat-checkbox__checkmark:before,
+.topcoat-checkbox__checkmark:after {
+  content: '';
+  position: absolute;
+}
+
+.topcoat-checkbox__checkmark:before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  width: 1rem;
+  height: 1rem;
+  background: #e5e9e8;
+  border: 0.0625rem solid #9daca9;
+  border-radius: 3px;
+  box-shadow: inset 0 0.0625rem #fff;
+}
+
+
+input[type="checkbox"]:checked + .topcoat-checkbox__checkmark:after {
+  opacity: 1;
+}
+
+.topcoat-checkbox__checkmark:after {
+  top: 0.125rem;
+  left: 0.0625rem;
+  opacity: 0;
+  width: 0.875rem;
+  height: 0.25rem;
+  background: transparent;
+  border: 0.4375rem solid #454545;
+  border-width: 0.1875rem;
+  border-top: none;
+  border-right: none;
+  border-radius: 1px;
+  -webkit-transform: rotate(-50deg);
+  -ms-transform: rotate(-50deg);
+  transform: rotate(-50deg);
+}
+
+input[type="checkbox"]:focus + .topcoat-checkbox__checkmark:before {
+  border: 0.0625rem solid #0036ff;
+  box-shadow: inset 0 0.0625rem rgba(255,255,255,0.36), 0 0 0 0.125rem #6fb5f1;
+}
+
+input[type="checkbox"]:active + .topcoat-checkbox__checkmark:before {
+  border: 0.0625rem solid #9daca9;
+  background-color: #d2d6d6;
+  box-shadow: inset 0 1px rgba(0,0,0,0.1);
+}
+
+input[type="checkbox"]:disabled:active + .topcoat-checkbox__checkmark:before {
+  border: 0.0625rem solid #9daca9;
+  background: #e5e9e8;
+  box-shadow: inset 0 1px #fff;
 }

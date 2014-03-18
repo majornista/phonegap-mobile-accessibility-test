@@ -36,7 +36,10 @@ body {
         color-stop(0, #A7A7A7),
         color-stop(0.51, #E4E4E4)
     );
-    font: -apple-system-tall-body;
+    /* using and Apple system font provides native support for dynamic type on iOS 7, 
+       but if used with the MobileAccessibility plugin's usePreferredTextZoom feature, 
+       font scaling will be applied twice. */ 
+    /* font: -apple-system-tall-body; */    
     height:100%;
     margin:0px;
     padding:0px;

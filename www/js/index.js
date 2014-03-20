@@ -62,40 +62,41 @@ var app = {
     },
     toggleAccessibilityStatusMonitoring: function(bool) {
         if (typeof MobileAccessibility === "undefined") return;
-        var preferredtextzoomInput = document.getElementById("preferredtextzoom");
+        var preferredtextzoomInput = document.getElementById("preferredtextzoom"),
+            platform = device.platform.toLowerCase();
         if (bool) {
             MobileAccessibility.isScreenReaderRunning(app.isScreenReaderRunningCallback);
             MobileAccessibility.isClosedCaptioningEnabled(app.isClosedCaptioningEnabledCallback);
             window.addEventListener("screenreaderstatuschanged", app.onScreenReaderStatusChanged, false);
             window.addEventListener("closedcaptioningstatuschanged", app.onClosedCaptioningStatusChanged, false);
-            if (device.platform === "iOS") {
+            if (platform === "ios") {
                 MobileAccessibility.isGuidedAccessEnabled(app.isGuidedAccessEnabledCallback);
                 MobileAccessibility.isInvertColorsEnabled(app.isInvertColorsEnabledCallback);
                 MobileAccessibility.isMonoAudioEnabled(app.isMonoAudioEnabledCallback);
                 window.addEventListener("guidedaccessstatuschanged", app.onGuidedAccessStatusChanged, false);
                 window.addEventListener("invertcolorsstatuschanged", app.onInvertColorsStatusChanged, false);
                 window.addEventListener("monoaudiostatuschanged", app.onMonoAudioStatusChanged, false);
-            } else if (device.platform === "Android") {
+            } else if (platform === "android" || platform === "amazon-fireos") {
                 MobileAccessibility.isTouchExplorationEnabled(app.isTouchExplorationEnabledCallback);
                 window.addEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged, false);
             }
             if (preferredtextzoomInput) {
-            	preferredtextzoomInput.checked = MobileAccessibility.usePreferredTextZoom();
-            	preferredtextzoomInput.addEventListener("change", app.usePreferredTextZoom, false);
-            	app.usePreferredTextZoom();
+                preferredtextzoomInput.checked = MobileAccessibility.usePreferredTextZoom();
+                preferredtextzoomInput.addEventListener("change", app.usePreferredTextZoom, false);
+                app.usePreferredTextZoom();
             }
         } else {
             window.removeEventListener("screenreaderstatuschanged", app.onScreenReaderStatusChanged);
             window.removeEventListener("closedcaptioningstatuschanged", app.onClosedCaptioningStatusChanged);
-            if (device.platform === "iOS") {
+            if (device.platform === "ios") {
                 window.removeEventListener("guidedaccessstatuschanged", app.onGuidedAccessStatusChanged);
                 window.removeEventListener("invertcolorsstatuschanged", app.onInvertColorsStatusChanged);
                 window.removeEventListener("monoaudiostatuschanged", app.onMonoAudioStatusChanged);
-            } else if (device.platform === "Android") {
+            } else if (platform === "android" || platform === "amazon-fireos") {
                 window.removeEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged);
             }
             if (preferredtextzoomInput) {
-            	preferredtextzoomInput.removeEventListener("change", app.usePreferredTextZoom);
+                preferredtextzoomInput.removeEventListener("change", app.usePreferredTextZoom);
             }
         }
     },
@@ -131,10 +132,11 @@ var app = {
     },
     isScreenReaderRunning: false,
     isScreenReaderRunningCallback: function (bool) {
+        var platform = device.platform.toLowerCase();
         app.toggleDivs("screenreader", bool);
         app.toggleNotificationButtons(bool);
         app.isScreenReaderRunning = bool;
-        if (device.platform === "Android" && bool) {
+        if ((platform === "android" || platform === "amazon-fireos") && bool) {
             var chromevoxstatus = document.getElementById("chromevoxstatus");
             setTimeout(function() {
                 if (typeof cvox !== "undefined" && cvox.ChromeVox.host.ttsLoaded()) {
@@ -204,10 +206,10 @@ var app = {
         }
     },
     usePreferredTextZoom: function (event) {
-    	var preferredtextzoomInput = document.getElementById("preferredtextzoom");
+        var preferredtextzoomInput = document.getElementById("preferredtextzoom");
         if (preferredtextzoomInput) {
-        	// console.log("app.usePreferredTextZoom " + preferredtextzoomInput.checked);
-        	MobileAccessibility.usePreferredTextZoom(preferredtextzoomInput.checked);
+            // console.log("app.usePreferredTextZoom " + preferredtextzoomInput.checked);
+            MobileAccessibility.usePreferredTextZoom(preferredtextzoomInput.checked);
         }
     },
     timeoutId: null,

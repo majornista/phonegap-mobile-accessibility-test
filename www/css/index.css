@@ -36,15 +36,16 @@ body {
         color-stop(0, #A7A7A7),
         color-stop(0.51, #E4E4E4)
     );
-    /* using and Apple system font provides native support for dynamic type on iOS 7, 
-       but if used with the MobileAccessibility plugin's usePreferredTextZoom feature, 
-       font scaling will be applied twice. */ 
-    /* font: -apple-system-tall-body; */    
+    /* using and Apple system font provides native support for dynamic type on iOS 7,
+       but if used with the MobileAccessibility plugin's usePreferredTextZoom feature,
+       font scaling will be applied twice. */
+    /* font: -apple-system-tall-body; */
     height:100%;
     margin:0px;
     padding:0px;
     text-transform:uppercase;
     width:100%;
+    text-align: center;
 }
 
 body .android-specific,
@@ -65,10 +66,9 @@ body.android .android-specific {
 .app {
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     height:auto; /* text area height */
-    left: 50%;
     text-align:center;
     padding:180px 0px 0px 0px; /* image height is 200px (bottom 20px are overlapped with text) */
-    margin: 25% auto 5% -9.5em;  /* offset vertical: half of image height and text area height */
+    margin: 25% auto 5% auto;  /* offset vertical: half of image height and text area height */
                          /* offset horizontal: half of text area width */
     max-width: 100%;
     width:19em; /* text area width */
@@ -76,15 +76,14 @@ body.android .android-specific {
     font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:0.75em;
     font-weight: 200;
-    position: absolute;
 }
 
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {
         background-position: left -20px;
-        padding: 60px 0px 30px 170px;  /* padding-top + padding-bottom + text area = image height */
-        margin: 15% auto 3% -16em; /* offset vertical: half of image height */
+        padding: 60px 0px 60px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin: 15% auto 3% auto; /* offset vertical: half of image height */
                             /* offset horizontal: half of image width and text area width */
     }
 }
@@ -109,7 +108,7 @@ h2 {
 
 .statusitem > p,
 .statusitem > button {
-    border-radius:4px;
+    border-radius: 4px;
     -webkit-border-radius:4px;
     color:#FFFFFF;
     font-size: 1em;
@@ -121,6 +120,7 @@ h2 {
     box-sizing: border-box;
     background-clip: padding-box;
     width: 90%;
+    max-width: 90%;
     text-transform:uppercase;
 }
 
@@ -179,14 +179,15 @@ input[type="checkbox"] {
   border: 0;
   opacity: 0.001;
   z-index: 1;
-  vertical-align: top;
+  vertical-align: middle;
   outline: none;
-  height: 1rem;
-  width: 1rem;
+  height: 1em;
+  width: 1em;
   margin-top: 0;
-  margin-right: -1rem;
-  margin-bottom: -1rem;
+  margin-right: -1em;
+  margin-bottom: -1em;
   margin-left: 0;
+  line-height: 1em;
 }
 
 .topcoat-checkbox__checkmark {
@@ -195,26 +196,26 @@ input[type="checkbox"] {
   background-clip: padding-box;
   position: relative;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  width: 1rem;
-  height: 1rem;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
 }
 
 .topcoat-checkbox {
   position: relative;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  line-height: 1rem;
   text-align: start;
 }
 
@@ -234,12 +235,13 @@ input[type="checkbox"]:disabled + .topcoat-checkbox__checkmark {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   background-clip: padding-box;
-  width: 1rem;
-  height: 1rem;
+  width: 1em;
+  height: 1em;
   background: #e5e9e8;
   border: 0.0625rem solid #9daca9;
   border-radius: 3px;
   box-shadow: inset 0 0.0625rem #fff;
+  line-height: 1em;
 }
 
 
@@ -248,35 +250,36 @@ input[type="checkbox"]:checked + .topcoat-checkbox__checkmark:after {
 }
 
 .topcoat-checkbox__checkmark:after {
-  top: 0.125rem;
-  left: 0.0625rem;
+  top: 0.125em;
+  left: 0.0625em;
   opacity: 0;
-  width: 0.875rem;
-  height: 0.25rem;
+  width: 0.875em;
+  height: 0.25em;
   background: transparent;
-  border: 0.4375rem solid #454545;
-  border-width: 0.1875rem;
+  border: 0.4375em solid #454545;
+  border-width: 0.1875em;
   border-top: none;
   border-right: none;
   border-radius: 1px;
   -webkit-transform: rotate(-50deg);
   -ms-transform: rotate(-50deg);
   transform: rotate(-50deg);
+  line-height: 1em;
 }
 
 input[type="checkbox"]:focus + .topcoat-checkbox__checkmark:before {
   border: 0.0625rem solid #0036ff;
-  box-shadow: inset 0 0.0625rem rgba(255,255,255,0.36), 0 0 0 0.125rem #6fb5f1;
+  box-shadow: inset 0 0.0625rem rgba(255,255,255,0.36), 0 0 0 0.125em #6fb5f1;
 }
 
 input[type="checkbox"]:active + .topcoat-checkbox__checkmark:before {
   border: 0.0625rem solid #9daca9;
   background-color: #d2d6d6;
-  box-shadow: inset 0 1px rgba(0,0,0,0.1);
+  box-shadow: inset 0 0.0625rem rgba(0,0,0,0.1);
 }
 
 input[type="checkbox"]:disabled:active + .topcoat-checkbox__checkmark:before {
   border: 0.0625rem solid #9daca9;
   background: #e5e9e8;
-  box-shadow: inset 0 1px #fff;
+  box-shadow: inset 0 0.0625rem #fff;
 }

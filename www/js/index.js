@@ -41,7 +41,8 @@ var app = {
         document.removeEventListener("deviceready", app.onDeviceReady);
 
         if (typeof device !== "undefined") {
-            document.body.className +=  " " + device.platform.toLowerCase().replace(" ", "-");
+            var classList = document.body.classList;
+            classList.add(device.platform.toLowerCase().replace(" ", "-"));
         }
 
         app.toggleDivs("deviceready", true);
@@ -76,7 +77,7 @@ var app = {
                 window.addEventListener("guidedaccessstatuschanged", app.onGuidedAccessStatusChanged, false);
                 window.addEventListener("invertcolorsstatuschanged", app.onInvertColorsStatusChanged, false);
                 window.addEventListener("monoaudiostatuschanged", app.onMonoAudioStatusChanged, false);
-            } else if (platform === "android" || platform === "amazon-fireos") {
+            } else {
                 MobileAccessibility.isTouchExplorationEnabled(app.isTouchExplorationEnabledCallback);
                 window.addEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged, false);
             }
@@ -92,7 +93,7 @@ var app = {
                 window.removeEventListener("guidedaccessstatuschanged", app.onGuidedAccessStatusChanged);
                 window.removeEventListener("invertcolorsstatuschanged", app.onInvertColorsStatusChanged);
                 window.removeEventListener("monoaudiostatuschanged", app.onMonoAudioStatusChanged);
-            } else if (platform === "android" || platform === "amazon-fireos") {
+            } else {
                 window.removeEventListener("touchexplorationstatechanged", app.onTouchExplorationStateChanged);
             }
             if (preferredtextzoomInput) {
@@ -136,7 +137,7 @@ var app = {
         app.toggleDivs("screenreader", bool);
         app.toggleNotificationButtons(bool);
         app.isScreenReaderRunning = bool;
-        if ((platform === "android" || platform === "amazon-fireos") && bool) {
+        if (platform != "ios" && bool) {
             var chromevoxstatus = document.getElementById("chromevoxstatus");
             setTimeout(function() {
                 if (typeof cvox !== "undefined" && cvox.ChromeVox.host.ttsLoaded()) {

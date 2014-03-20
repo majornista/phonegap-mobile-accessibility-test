@@ -48,13 +48,18 @@ body {
     text-align: center;
 }
 
+body.amazon-fireos {
+    font-size: 150%;
+}
+
 body .android-specific,
 body .ios-specific {
     display: none;
 }
 
 body.ios .ios-specific,
-body.android .android-specific {
+body.android .android-specific,
+body.amazon-fireos .android-specific    {
     display: block;
 }
 

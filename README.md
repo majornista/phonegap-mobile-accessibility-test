@@ -7,4 +7,3 @@ This application provides a demonstration of how to use the [Phone Gap Mobile Ac
 
 The app should be compatible with iOS 5+ and Android 4.0+, and I've included the platform projects in the repository.
 
-One caveat with the iOS project is that you need to link the MobileAccessibility.framework, which became available in iOS 7, by -weak_reference in order for the project to compile properly and be backward compatible with earlier versions of iOS.

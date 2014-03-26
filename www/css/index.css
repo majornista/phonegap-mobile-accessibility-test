@@ -85,6 +85,24 @@ body.amazon-fireos .android-specific    {
     position:relative;
 }
 
+.invert .app
+{
+    filter: invert(1);
+    -webkit-filter: invert(1);
+    -moz-filter: invert(1);
+    -o-filter: invert(1);
+    -ms-filter: invert(1);
+}
+
+.invert .app > *
+{
+    filter: invert(1);
+    -webkit-filter: invert(1);
+    -moz-filter: invert(1);
+    -o-filter: invert(1);
+    -ms-filter: invert(1);
+}
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {

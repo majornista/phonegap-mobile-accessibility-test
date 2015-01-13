@@ -16,28 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+/*jslint browser: true, devel: true*/
+/*global cvox, device, MobileAccessibility, MobileAccessibilityNotifications*/
+
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
+        "use strict";
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // "load", "deviceready", "offline", and "online".
-    bindEvents: function() {
+    bindEvents: function () {
+        "use strict";
         document.addEventListener("deviceready", this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of "this" is the event. In order to call the "receivedEvent"
     // function, we must explicity call "app.receivedEvent(...);"
-    onDeviceReady: function(event) {
+    onDeviceReady: function (event) {
+        "use strict";
         app.receivedEvent("deviceready");
         document.addEventListener("pause", app.onPause, false);
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
+        "use strict";
         document.removeEventListener("deviceready", app.onDeviceReady);
 
         if (typeof device !== "undefined") {
@@ -49,20 +57,27 @@ var app = {
 
         app.toggleAccessibilityStatusMonitoring(true);
     },
-    onPause: function(event) {
+    onPause: function (event) {
+        "use strict";
+        console.log("onPause");
         document.removeEventListener("pause", app.onPause);
         document.addEventListener("resume", app.onResume, false);
         app.toggleAccessibilityStatusMonitoring(false);
     },
-    onResume: function(event) {
-        setTimeout(function(app) {
+    onResume: function (event) {
+        "use strict";
+        setTimeout(function (app) {
+            console.log("onResume");
             document.removeEventListener("resume", app.onResume);
             document.addEventListener("pause", app.onPause, false);
             app.toggleAccessibilityStatusMonitoring(true);
         }, 0, app);
     },
-    toggleAccessibilityStatusMonitoring: function(bool) {
-        if (typeof MobileAccessibility === "undefined") return;
+    toggleAccessibilityStatusMonitoring: function (bool) {
+        "use strict";
+        if (typeof MobileAccessibility === "undefined") {
+            return;
+        }
         var preferredtextzoomInput = document.getElementById("preferredtextzoom"),
             platform = device.platform.toLowerCase();
         if (bool) {
@@ -77,6 +92,9 @@ var app = {
                 window.addEventListener(MobileAccessibilityNotifications.GUIDED_ACCESS_STATUS_CHANGED, app.onGuidedAccessStatusChanged, false);
                 window.addEventListener(MobileAccessibilityNotifications.INVERT_COLORS_STATUS_CHANGED, app.onInvertColorsStatusChanged, false);
                 window.addEventListener(MobileAccessibilityNotifications.MONO_AUDIO_STATUS_CHANGED, app.onMonoAudioStatusChanged, false);
+            } else if (platform === "windows") {
+                MobileAccessibility.isHighContrastEnabled(app.isHighContrastEnabledCallback);
+                window.addEventListener(MobileAccessibilityNotifications.HIGH_CONTRAST_CHANGED, app.onHighContrastChanged, false);
             } else {
                 MobileAccessibility.isTouchExplorationEnabled(app.isTouchExplorationEnabledCallback);
                 window.addEventListener(MobileAccessibilityNotifications.TOUCH_EXPLORATION_STATUS_CHANGED, app.onTouchExplorationStateChanged, false);
@@ -93,6 +111,8 @@ var app = {
                 window.removeEventListener(MobileAccessibilityNotifications.GUIDED_ACCESS_STATUS_CHANGED, app.onGuidedAccessStatusChanged);
                 window.removeEventListener(MobileAccessibilityNotifications.INVERT_COLORS_STATUS_CHANGED, app.onInvertColorsStatusChanged);
                 window.removeEventListener(MobileAccessibilityNotifications.MONO_AUDIO_STATUS_CHANGED, app.onMonoAudioStatusChanged);
+            } else if (platform === "windows") {
+                window.removeEventListener(MobileAccessibilityNotifications.HIGH_CONTRAST_CHANGED, app.onHighContrastChanged);
             } else {
                 window.removeEventListener(MobileAccessibilityNotifications.TOUCH_EXPLORATION_STATUS_CHANGED, app.onTouchExplorationStateChanged);
             }
@@ -101,48 +121,61 @@ var app = {
             }
         }
     },
-    onScreenReaderStatusChanged: function(info) {
+    onScreenReaderStatusChanged: function (info) {
+        "use strict";
         if (info && typeof info.isScreenReaderRunning !== "undefined") {
             app.isScreenReaderRunningCallback(info.isScreenReaderRunning);
         }
     },
-    onClosedCaptioningStatusChanged: function(info) {
+    onClosedCaptioningStatusChanged: function (info) {
+        "use strict";
         if (info && typeof info.isClosedCaptioningEnabled !== "undefined") {
             app.isClosedCaptioningEnabledCallback(info.isClosedCaptioningEnabled);
         }
     },
-    onGuidedAccessStatusChanged: function(info) {
+    onGuidedAccessStatusChanged: function (info) {
+        "use strict";
         if (info && typeof info.isGuidedAccessEnabled !== "undefined") {
             app.isGuidedAccessEnabledCallback(info.isGuidedAccessEnabled);
         }
     },
-    onInvertColorsStatusChanged: function(info) {
+    onInvertColorsStatusChanged: function (info) {
+        "use strict";
         if (info && typeof info.isInvertColorsEnabled !== "undefined") {
             app.isInvertColorsEnabledCallback(info.isInvertColorsEnabled);
         }
     },
-    onMonoAudioStatusChanged: function(info) {
+    onMonoAudioStatusChanged: function (info) {
+        "use strict";
         if (info && typeof info.isMonoAudioEnabled !== "undefined") {
             app.isMonoAudioEnabledCallback(info.isMonoAudioEnabled);
         }
     },
-    onTouchExplorationStateChanged: function(info) {
+    onTouchExplorationStateChanged: function (info) {
+        "use strict";
         if (info && typeof info.isTouchExplorationEnabled !== "undefined") {
             app.isTouchExplorationEnabledCallback(info.isTouchExplorationEnabled);
         }
     },
+    onHighContrastChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isHighContrastEnabled !== "undefined") {
+            app.isHighContrastEnabledCallback(info.isHighContrastEnabled);
+        }
+    },
     isScreenReaderRunning: false,
     isScreenReaderRunningCallback: function (bool) {
-        var platform = device.platform.toLowerCase();
+        "use strict";
+        var platform = device.platform.toLowerCase(), chromevoxstatus;
         app.toggleDivs("screenreader", bool);
-        app.toggleNotificationButtons(bool);
+        app.toggleNotificationButtons(bool || platform === "windows");
         app.isScreenReaderRunning = bool;
-        if (platform !== "ios" && bool) {
-            var chromevoxstatus = document.getElementById("chromevoxstatus");
-            setTimeout(function() {
+        if ((platform === "android" || platform === "amazon-fireos") && bool) {
+            chromevoxstatus = document.getElementById("chromevoxstatus");
+            setTimeout(function () {
                 if (MobileAccessibility.isChromeVoxActive()) {
-                    cvox.AbstractTts.PRONUNCIATION_DICTIONARY["PhoneGap"] = "Phone Gap";
-                    chromevoxstatus.setAttribute("hidden","hidden");
+                    cvox.AbstractTts.PRONUNCIATION_DICTIONARY.PhoneGap = "Phone Gap";
+                    chromevoxstatus.setAttribute("hidden", "hidden");
                 } else {
                     chromevoxstatus.removeAttribute("hidden");
                     MobileAccessibility.speak(chromevoxstatus.textContent);
@@ -152,13 +185,19 @@ var app = {
     },
     isClosedCaptioningEnabled: false,
     isClosedCaptioningEnabledCallback: function (bool) {
-        if (bool === app.isClosedCaptioningEnabled) return;
+        "use strict";
+        if (bool === app.isClosedCaptioningEnabled) {
+            return;
+        }
         app.toggleDivs("closedcaptioning", bool);
         app.isClosedCaptioningEnabled = bool;
     },
     isInvertColorsEnabled: false,
     isInvertColorsEnabledCallback: function (bool) {
-        if (bool === app.isInvertColorsEnabled) return;
+        "use strict";
+        if (bool === app.isInvertColorsEnabled) {
+            return;
+        }
         app.toggleDivs("invertcolors", bool);
         app.isInvertColorsEnabled = bool;
 
@@ -171,25 +210,44 @@ var app = {
     },
     isMonoAudioEnabled: false,
     isMonoAudioEnabledCallback: function (bool) {
-        if (bool === app.isMonoAudioEnabled) return;
+        "use strict";
+        if (bool === app.isMonoAudioEnabled) {
+            return;
+        }
         app.toggleDivs("monoaudio", bool);
         app.isMonoAudioEnabled = bool;
     },
     isGuidedAccessEnabled: false,
     isGuidedAccessEnabledCallback: function (bool) {
-        if (bool === app.isGuidedAccessEnabled) return;
+        "use strict";
+        if (bool === app.isGuidedAccessEnabled) {
+            return;
+        }
         app.toggleDivs("guidedaccess", bool);
         app.isGuidedAccessEnabled = bool;
     },
     isTouchExplorationEnabled: false,
     isTouchExplorationEnabledCallback: function (bool) {
-        if (bool === app.isTouchExplorationEnabled) return;
+        "use strict";
+        if (bool === app.isTouchExplorationEnabled) {
+            return;
+        }
         app.toggleDivs("touchexploration", bool);
         app.isTouchExplorationEnabled = bool;
     },
+    isHighContrastEnabled: false,
+    isHighContrastEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isHighContrastEnabled) {
+            return;
+        }
+        app.toggleDivs("highcontrast", bool);
+        app.isHighContrastEnabled = bool;
+    },
     toggleDivs: function (className, bool) {
+        "use strict";
         var onElement = document.body.querySelector("." + className + ".on"),
-        offElement = document.body.querySelector("." + className + ".off");
+            offElement = document.body.querySelector("." + className + ".off");
         if (bool) {
             onElement.setAttribute("style", "display:block;");
             offElement.setAttribute("style", "display:none;");
@@ -199,10 +257,11 @@ var app = {
         }
     },
     toggleNotificationButtons: function (bool) {
+        "use strict";
         var btns = document.body.querySelectorAll(".postnotificationbutton"),
             i,
             btn;
-        for (i = 0; i < btns.length; i++) {
+        for (i = 0; i < btns.length; i += 1) {
             btn = btns[i];
             btn.disabled = !bool;
             if (bool) {
@@ -214,6 +273,7 @@ var app = {
         }
     },
     usePreferredTextZoom: function (event) {
+        "use strict";
         var preferredtextzoomInput = document.getElementById("preferredtextzoom");
         if (preferredtextzoomInput) {
             // console.log("app.usePreferredTextZoom " + preferredtextzoomInput.checked);
@@ -222,6 +282,7 @@ var app = {
     },
     timeoutId: null,
     handleNotificationButtonClick: function (event) {
+        "use strict";
         if (event.target.value) {
             var notificationType = null,
                 value = event.target.value;
@@ -229,36 +290,35 @@ var app = {
                 clearTimeout(app.timeoutId);
                 app.timeoutId = null;
             }
-            switch (event.target.id)
-            {
-                case "postlayoutchangednotification":
-                    notificationType = MobileAccessibilityNotifications.LAYOUT_CHANGED;
-                    break;
-                case "postpagescrollednotification":
-                    notificationType = MobileAccessibilityNotifications.PAGE_SCROLLED;
-                    break;
-                case "postscreenchangednotification":
-                    notificationType = MobileAccessibilityNotifications.SCREEN_CHANGED;
-                    break;
-                case "postannouncementnotification":
-                case "speak":
-                    notificationType = MobileAccessibilityNotifications.ANNOUNCEMENT;
-                    app.timeoutId = setTimeout(function() {
-                            MobileAccessibility.speak(value);
-                        }, 150);
-                    return;
-                case "stop":
-                    app.timeoutId = setTimeout(function() {
-                            MobileAccessibility.speak(value);
-                            app.timeoutId = setTimeout(function() {
-                                MobileAccessibility.stop();
-                            }, 9000);
-                        }, 150);
-                    return;
+            switch (event.target.id) {
+            case "postlayoutchangednotification":
+                notificationType = MobileAccessibilityNotifications.LAYOUT_CHANGED;
+                break;
+            case "postpagescrollednotification":
+                notificationType = MobileAccessibilityNotifications.PAGE_SCROLLED;
+                break;
+            case "postscreenchangednotification":
+                notificationType = MobileAccessibilityNotifications.SCREEN_CHANGED;
+                break;
+            case "postannouncementnotification":
+            case "speak":
+                notificationType = MobileAccessibilityNotifications.ANNOUNCEMENT;
+                app.timeoutId = setTimeout(function () {
+                    MobileAccessibility.speak(value);
+                }, 150);
+                return;
+            case "stop":
+                app.timeoutId = setTimeout(function () {
+                    MobileAccessibility.speak(value);
+                    app.timeoutId = setTimeout(function () {
+                        MobileAccessibility.stop();
+                    }, 9000);
+                }, 150);
+                return;
             }
             if (notificationType) {
                 MobileAccessibility.postNotification(notificationType, event.target.value,
-                    function(info) {
+                    function (info) {
                         if (info) {
                             console.log("Screen Reader announced \"" + info.stringValue + "\" success : " + info.wasSuccessful);
                         }

@@ -48,6 +48,8 @@
                     <p class="closedcaptioning off">Closed Captioning is OFF</p>
                     <p class="closedcaptioning on">Closed Captioning is ON</p>
                 </div>
+            </div>
+            <div class="ios-specific android-specific windows-specific">
                 <div class="statusitem">
                     <button id="speak" class="postnotificationbutton" value="Hey there! This is a test of a generic speak command." disabled>Speak Something</button>
                 </div>
@@ -56,9 +58,9 @@
                 </div>
                 <div id="preferredtextzoomstatus" class="statusitem">
                     <label class="topcoat-checkbox" for="preferredtextzoom">
-                      <input type="checkbox" id="preferredtextzoom">
-                      <div class="topcoat-checkbox__checkmark"></div>
-                      Use Preferred Text Zoom
+                        <input type="checkbox" id="preferredtextzoom" />
+                        <span class="topcoat-checkbox__checkmark"></span>
+                        Use Preferred Text Zoom
                     </label>
                 </div>
             </div>
@@ -68,11 +70,11 @@
                     <p class="guidedaccess off">Guided Access is OFF</p>
                     <p class="guidedaccess on">Guided Access is ON</p>
                 </div>
-                <div id="invertcolorsstatus" role="status" aria-channel="general" class="statusitem blink">
+                <div id="invertcolorsstatus" role="status" class="statusitem blink">
                     <p class="invertcolors off">Invert Colors is OFF</p>
                     <p class="invertcolors on">Invert Colors is ON</p>
                 </div>
-                <div id="monoaudiostatus" role="status" aria-channel="general" class="statusitem blink">
+                <div id="monoaudiostatus" role="status" class="statusitem blink">
                     <p class="monoaudio off">Audio is STEREO</p>
                     <p class="monoaudio on">Audio is MONO</p>
                 </div>
@@ -96,7 +98,13 @@
                     <p class="touchexploration on">Touch Exploration is ON</p>
                 </div>
             </div>
-
+            <div class="windows-specific">
+                <h2>Windows Specific</h2>
+                <div id="highcontraststatus" role="status" class="statusitem blink">
+                    <p class="highcontrast off">High Contrast is OFF</p>
+                    <p class="highcontrast on">High Contrast is ON</p>
+                </div>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

@@ -21,30 +21,30 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+        <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=4, minimum-scale=1, width=device-width, height=device-height" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>PhoneGap Accessibility</title>
     </head>
     <body>
         <div class="app">
             <h1 aria-label="Phone Gap">PhoneGap</h1>
-            <div id="devicereadystatus" role="status" class="statusitem blink">
+            <div id="devicereadystatus" role="status" class="statusitem">
                 <p class="deviceready off">Connecting to Device</p>
                 <p class="deviceready on">Device is Ready</p>
             </div>
             <div class="ios-specific android-specific">
-                <div id="screenreaderstatus" role="status" class="statusitem blink">
+                <div id="screenreaderstatus" role="status" class="statusitem">
                     <p class="screenreader off">Screen Reader is OFF</p>
                     <p class="screenreader on">Screen Reader is ON</p>
                 </div>
             </div>
             <div class="android-specific">
-                <div id="chromevoxstatus" role="alert" class="statusitem blink" hidden="hidden">
+                <div id="chromevoxstatus" role="alert" class="statusitem" hidden="hidden">
                     <p class="chromevox alert">ChromeVox is UNAVAILABLE</p>
                 </div>
             </div>
             <div class="ios-specific android-specific">
-                <div id="closedcaptioningstatus" role="status" class="statusitem blink">
+                <div id="closedcaptioningstatus" role="status" class="statusitem">
                     <p class="closedcaptioning off">Closed Captioning is OFF</p>
                     <p class="closedcaptioning on">Closed Captioning is ON</p>
                 </div>
@@ -66,15 +66,15 @@
             </div>
             <div class="ios-specific">
                 <h2>iOS Specific</h2>
-                <div id="guidedaccessstatus" role="status" class="statusitem blink">
+                <div id="guidedaccessstatus" role="status" class="statusitem">
                     <p class="guidedaccess off">Guided Access is OFF</p>
                     <p class="guidedaccess on">Guided Access is ON</p>
                 </div>
-                <div id="invertcolorsstatus" role="status" class="statusitem blink">
+                <div id="invertcolorsstatus" role="status" class="statusitem">
                     <p class="invertcolors off">Invert Colors is OFF</p>
                     <p class="invertcolors on">Invert Colors is ON</p>
                 </div>
-                <div id="monoaudiostatus" role="status" class="statusitem blink">
+                <div id="monoaudiostatus" role="status" class="statusitem">
                     <p class="monoaudio off">Audio is STEREO</p>
                     <p class="monoaudio on">Audio is MONO</p>
                 </div>
@@ -93,14 +93,14 @@
             </div>
             <div class="android-specific">
                 <h2>Android Specific</h2>
-                <div id="touchexplorationstatus" role="status" class="statusitem blink">
+                <div id="touchexplorationstatus" role="status" class="statusitem">
                     <p class="touchexploration off">Touch Exploration is OFF</p>
                     <p class="touchexploration on">Touch Exploration is ON</p>
                 </div>
             </div>
             <div class="windows-specific">
                 <h2>Windows Specific</h2>
-                <div id="highcontraststatus" role="status" class="statusitem blink">
+                <div id="highcontraststatus" role="status" class="statusitem">
                     <p class="highcontrast off">High Contrast is OFF</p>
                     <p class="highcontrast on">High Contrast is ON</p>
                 </div>

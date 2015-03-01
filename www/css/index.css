@@ -77,7 +77,7 @@ body.windows .windows-specific
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     height:auto; /* text area height */
     text-align:center;
-    padding:180px 0px 0px 0px; /* image height is 200px (bottom 20px are overlapped with text) */
+    padding:180px 0px 1em 0px; /* image height is 200px (bottom 20px are overlapped with text) */
     margin: 25% auto 5% auto;  /* offset vertical: half of image height and text area height */
                          /* offset horizontal: half of text area width */
     max-width: 100%;

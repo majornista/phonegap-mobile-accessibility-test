@@ -20,7 +20,9 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
         <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=4, minimum-scale=1, width=device-width, height=device-height" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>PhoneGap Accessibility</title>
@@ -66,6 +68,18 @@
             </div>
             <div class="ios-specific">
                 <h2>iOS Specific</h2>
+                <div id="boldtextstatus" role="status" class="statusitem">
+                    <p class="boldtext off">Bold Text is OFF</p>
+                    <p class="boldtext on">Bold Text is ON</p>
+                </div>
+                <div id="darkersystemcolorsstatus" role="status" class="statusitem">
+                    <p class="darkersystemcolors off">Darker System Colors is OFF</p>
+                    <p class="darkersystemcolors on">Darker System Colors is ON</p>
+                </div>
+                <div id="grayscalestatus" role="status" class="statusitem">
+                    <p class="grayscale off">Grayscale is OFF</p>
+                    <p class="grayscale on">Grayscale is ON</p>
+                </div>
                 <div id="guidedaccessstatus" role="status" class="statusitem">
                     <p class="guidedaccess off">Guided Access is OFF</p>
                     <p class="guidedaccess on">Guided Access is ON</p>
@@ -77,6 +91,26 @@
                 <div id="monoaudiostatus" role="status" class="statusitem">
                     <p class="monoaudio off">Audio is STEREO</p>
                     <p class="monoaudio on">Audio is MONO</p>
+                </div>
+                <div id="reducemotionstatus" role="status" class="statusitem">
+                    <p class="reducemotion off">Reduce Motion is OFF</p>
+                    <p class="reducemotion on">Reduce Motion is ON</p>
+                </div>
+                <div id="reducetransparencystatus" role="status" class="statusitem">
+                    <p class="reducetransparency off">Reduce Transparency is OFF</p>
+                    <p class="reducetransparency on">Reduce Transparency is ON</p>
+                </div>
+                <div id="speakscreenstatus" role="status" class="statusitem">
+                    <p class="speakscreen off">Speak Screen is OFF</p>
+                    <p class="speakscreen on">Speak Screen is ON</p>
+                </div>
+                <div id="speakselectionstatus" role="status" class="statusitem">
+                    <p class="speakselection off">Speak Selection is OFF</p>
+                    <p class="speakselection on">Speak Selection is ON</p>
+                </div>
+                <div id="switchcontrolstatus" role="status" class="statusitem">
+                    <p class="switchcontrol off">Switch Control is OFF</p>
+                    <p class="switchcontrol on">Switch Control is ON</p>
                 </div>
                 <div class="statusitem">
                     <button id="postannouncementnotification" class="postnotificationbutton" value="This is a test of an announcement notification." disabled>Post Announcement Notification</button>
@@ -108,8 +142,5 @@
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
     </body>
 </html>

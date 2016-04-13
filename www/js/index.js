@@ -86,12 +86,29 @@ var app = {
             window.addEventListener(MobileAccessibilityNotifications.SCREEN_READER_STATUS_CHANGED, app.onScreenReaderStatusChanged, false);
             window.addEventListener(MobileAccessibilityNotifications.CLOSED_CAPTIONING_STATUS_CHANGED, app.onClosedCaptioningStatusChanged, false);
             if (platform === "ios") {
+                MobileAccessibility.isBoldTextEnabled(app.isBoldTextEnabledCallback);
+                MobileAccessibility.isDarkerSystemColorsEnabled(app.isDarkerSystemColorsEnabledCallback);
+                MobileAccessibility.isGrayscaleEnabled(app.isGrayscaleEnabledCallback);
                 MobileAccessibility.isGuidedAccessEnabled(app.isGuidedAccessEnabledCallback);
                 MobileAccessibility.isInvertColorsEnabled(app.isInvertColorsEnabledCallback);
                 MobileAccessibility.isMonoAudioEnabled(app.isMonoAudioEnabledCallback);
+                MobileAccessibility.isReduceMotionEnabled(app.isReduceMotionEnabledCallback);
+                MobileAccessibility.isReduceTransparencyEnabled(app.isReduceTransparencyEnabledCallback);
+                MobileAccessibility.isSpeakScreenEnabled(app.isSpeakScreenEnabledCallback);
+                MobileAccessibility.isSpeakSelectionEnabled(app.isSpeakSelectionEnabledCallback);
+                MobileAccessibility.isSwitchControlRunning(app.isSwitchControlRunningCallback);
+                window.addEventListener(MobileAccessibilityNotifications.BOLD_TEXT_STATUS_CHANGED, app.onBoldTextStatusChanged, false);
                 window.addEventListener(MobileAccessibilityNotifications.GUIDED_ACCESS_STATUS_CHANGED, app.onGuidedAccessStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.DARKER_SYSTEM_COLORS_STATUS_CHANGED, app.onDarkerSystemColorsStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.GRAYSCALE_STATUS_CHANGED, app.onGrayscaleStatusChanged, false);
                 window.addEventListener(MobileAccessibilityNotifications.INVERT_COLORS_STATUS_CHANGED, app.onInvertColorsStatusChanged, false);
                 window.addEventListener(MobileAccessibilityNotifications.MONO_AUDIO_STATUS_CHANGED, app.onMonoAudioStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.REDUCE_MOTION_STATUS_CHANGED, app.onReduceMotionStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.REDUCE_TRANSPARENCY_STATUS_CHANGED, app.onReduceTransparencyStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.SPEAK_SCREEN_STATUS_CHANGED, app.onSpeakScreenStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.SPEAK_SELECTION_STATUS_CHANGED, app.onSpeakSelectionStatusChanged, false);
+                window.addEventListener(MobileAccessibilityNotifications.SWITCH_CONTROL_STATUS_CHANGED, app.onSwitchControlStatusChanged, false);
+
             } else if (platform === "windows") {
                 MobileAccessibility.isHighContrastEnabled(app.isHighContrastEnabledCallback);
                 window.addEventListener(MobileAccessibilityNotifications.HIGH_CONTRAST_CHANGED, app.onHighContrastChanged, false);
@@ -127,10 +144,28 @@ var app = {
             app.isScreenReaderRunningCallback(info.isScreenReaderRunning);
         }
     },
+    onBoldTextStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isBoldTextEnabled !== "undefined") {
+            app.isBoldTextEnabledCallback(info.isBoldTextEnabled);
+        }
+    },
     onClosedCaptioningStatusChanged: function (info) {
         "use strict";
         if (info && typeof info.isClosedCaptioningEnabled !== "undefined") {
             app.isClosedCaptioningEnabledCallback(info.isClosedCaptioningEnabled);
+        }
+    },
+    onDarkerSystemColorsStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isDarkerSystemColorsEnabled !== "undefined") {
+            app.isDarkerSystemColorsEnabledCallback(info.isDarkerSystemColorsEnabled);
+        }
+    },
+    onGrayscaleStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isGrayscaleEnabled !== "undefined") {
+            app.isGrayscaleEnabledCallback(info.isGrayscaleEnabled);
         }
     },
     onGuidedAccessStatusChanged: function (info) {
@@ -149,6 +184,36 @@ var app = {
         "use strict";
         if (info && typeof info.isMonoAudioEnabled !== "undefined") {
             app.isMonoAudioEnabledCallback(info.isMonoAudioEnabled);
+        }
+    },
+    onReduceMotionStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isReduceMotionEnabled !== "undefined") {
+            app.isReduceMotionEnabledCallback(info.isReduceMotionEnabled);
+        }
+    },
+    onReduceTransparencyStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isReduceTransparencyEnabled !== "undefined") {
+            app.isReduceTransparencyEnabledCallback(info.isReduceTransparencyEnabled);
+        }
+    },
+    onSpeakScreenStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isSpeakScreenEnabled !== "undefined") {
+            app.isSpeakScreenEnabledCallback(info.isSpeakScreenEnabled);
+        }
+    },
+    onSpeakSelectionStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isSpeakSelectionEnabled !== "undefined") {
+            app.isSpeakSelectionEnabledCallback(info.isSpeakSelectionEnabled);
+        }
+    },
+    onSwitchControlStatusChanged: function (info) {
+        "use strict";
+        if (info && typeof info.isSwitchControlRunning !== "undefined") {
+            app.isSwitchControlRunningCallback(info.isSwitchControlRunning);
         }
     },
     onTouchExplorationStateChanged: function (info) {
@@ -183,6 +248,15 @@ var app = {
             }, 5000);
         }
     },
+    isBoldTextEnabled: false,
+    isBoldTextEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isBoldTextEnabled) {
+            return;
+        }
+        app.toggleDivs("boldtext", bool);
+        app.isBoldTextEnabled = bool;
+    },
     isClosedCaptioningEnabled: false,
     isClosedCaptioningEnabledCallback: function (bool) {
         "use strict";
@@ -191,6 +265,33 @@ var app = {
         }
         app.toggleDivs("closedcaptioning", bool);
         app.isClosedCaptioningEnabled = bool;
+    },
+    isDarkerSystemColorsEnabled: false,
+    isDarkerSystemColorsEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isDarkerSystemColorsEnabled) {
+            return;
+        }
+        app.toggleDivs("darkersystemcolors", bool);
+        app.isDarkerSystemColorsEnabled = bool;
+    },
+    isGrayscaleEnabled: false,
+    isGrayscaleEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isGrayscaleEnabled) {
+            return;
+        }
+        app.toggleDivs("grayscale", bool);
+        app.isGrayscaleEnabled = bool;
+    },
+    isGuidedAccessEnabled: false,
+    isGuidedAccessEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isGuidedAccessEnabled) {
+            return;
+        }
+        app.toggleDivs("guidedaccess", bool);
+        app.isGuidedAccessEnabled = bool;
     },
     isInvertColorsEnabled: false,
     isInvertColorsEnabledCallback: function (bool) {
@@ -217,14 +318,50 @@ var app = {
         app.toggleDivs("monoaudio", bool);
         app.isMonoAudioEnabled = bool;
     },
-    isGuidedAccessEnabled: false,
-    isGuidedAccessEnabledCallback: function (bool) {
+    isReduceMotionEnabled: false,
+    isReduceMotionEnabledCallback: function (bool) {
         "use strict";
-        if (bool === app.isGuidedAccessEnabled) {
+        if (bool === app.isReduceMotionEnabled) {
             return;
         }
-        app.toggleDivs("guidedaccess", bool);
-        app.isGuidedAccessEnabled = bool;
+        app.toggleDivs("reducemotion", bool);
+        app.isReduceMotionEnabled = bool;
+    },
+    isReduceTransparencyEnabled: false,
+    isReduceTransparencyEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isReduceTransparencyEnabled) {
+            return;
+        }
+        app.toggleDivs("reducetransparency", bool);
+        app.isReduceTransparencyEnabled = bool;
+    },
+    isSpeakScreenEnabled: false,
+    isSpeakScreenEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isSpeakScreenEnabled) {
+            return;
+        }
+        app.toggleDivs("speakscreen", bool);
+        app.isSpeakScreenEnabled = bool;
+    },
+    isSpeakSelectionEnabled: false,
+    isSpeakSelectionEnabledCallback: function (bool) {
+        "use strict";
+        if (bool === app.isSpeakSelectionEnabled) {
+            return;
+        }
+        app.toggleDivs("speakselection", bool);
+        app.isSpeakSelectionEnabled = bool;
+    },
+    isSwitchControlRunning: false,
+    isSwitchControlRunningCallback: function (bool) {
+        "use strict";
+        if (bool === app.isSwitchControlRunning) {
+            return;
+        }
+        app.toggleDivs("switchcontrol", bool);
+        app.isSwitchControlRunning = bool;
     },
     isTouchExplorationEnabled: false,
     isTouchExplorationEnabledCallback: function (bool) {
@@ -327,3 +464,4 @@ var app = {
         }
     }
 };
+app.initialize();
